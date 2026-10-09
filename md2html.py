@@ -59,7 +59,7 @@ CSS = """
 @page { size: A4; margin: 16mm 15mm 16mm 15mm; }
 * { box-sizing: border-box; }
 body {
-  font-family: "Malgun Gothic", "맑은 고딕", -apple-system, sans-serif;
+  font-family: "NanumGothic", "나눔고딕", "Malgun Gothic", "맑은 고딕", -apple-system, sans-serif;
   font-size: 10.2pt; line-height: 1.58; color: #1a1a1a;
   margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
@@ -126,7 +126,7 @@ MERMAID_JS = """
     startOnLoad: true,
     theme: "base",
     flowchart: { useMaxWidth: true, htmlLabels: true },
-    themeVariables: { fontFamily: "Malgun Gothic, sans-serif", fontSize: "13px" }
+    themeVariables: { fontFamily: "NanumGothic, Malgun Gothic, sans-serif", fontSize: "13px" }
   });
   await mermaid.run();
   document.title = document.title;  // settle before print capture

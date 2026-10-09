@@ -36,7 +36,7 @@ ONE = """<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>
   mermaid.initialize({
     startOnLoad: true, theme: "base",
     flowchart: { useMaxWidth: true, htmlLabels: true },
-    themeVariables: { fontFamily: "Malgun Gothic, sans-serif", fontSize: "13px" }
+    themeVariables: { fontFamily: "NanumGothic, Malgun Gothic, sans-serif", fontSize: "13px" }
   });
 </script></body></html>"""
 
