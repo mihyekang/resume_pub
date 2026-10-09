@@ -60,7 +60,7 @@ CSS = """
 * { box-sizing: border-box; }
 body {
   font-family: "Malgun Gothic", "맑은 고딕", -apple-system, sans-serif;
-  font-size: 10.2pt; line-height: 1.62; color: #1a1a1a;
+  font-size: 10.2pt; line-height: 1.58; color: #1a1a1a;
   margin: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact;
 }
 h1 {
@@ -82,6 +82,8 @@ h4 {
   break-after: avoid; page-break-after: avoid;
 }
 p { margin: 5pt 0; text-align: justify; }
+/* A bold-only line (결과, 회고: …) labels the block below it; keep them together. */
+p:has(> strong:only-child) { break-after: avoid; page-break-after: avoid; }
 ul { margin: 4pt 0 8pt; padding-left: 17pt; }
 li { margin: 2.5pt 0; }
 strong { font-weight: 700; color: #000; }
