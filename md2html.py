@@ -83,7 +83,9 @@ h4 {
 }
 p { margin: 5pt 0; text-align: justify; }
 /* A bold-only line (결과, 회고: …) labels the block below it; keep them together. */
-p:has(> strong:only-child) { break-after: avoid; page-break-after: avoid; }
+p.label { break-after: avoid; page-break-after: avoid; }
+/* So does the sentence that introduces a table. */
+p:has(+ table) { break-after: avoid; page-break-after: avoid; }
 ul { margin: 4pt 0 8pt; padding-left: 17pt; }
 li { margin: 2.5pt 0; }
 strong { font-weight: 700; color: #000; }
@@ -102,6 +104,8 @@ th {
   padding: 5pt 7pt; border: 0.6pt solid #b8b8b8;
 }
 td { padding: 5pt 7pt; border: 0.6pt solid #cfcfcf; vertical-align: top; }
+/* Break Korean between words, not inside them, in narrow columns. */
+th, td { word-break: keep-all; }
 h2, h3, h4 { break-inside: avoid; page-break-inside: avoid; }
 li, tr { break-inside: avoid; page-break-inside: avoid; }
 """
@@ -129,9 +133,17 @@ MERMAID_JS = """
 </script>
 """
 
+# A paragraph that is nothing but bold text is a label for what follows it.
+body = re.sub(r"<p>(<strong>[^<]*</strong>)</p>", r'<p class="label">\1</p>', body)
+
+# The PDF title comes from the document's own heading, so the portfolio is not
+# filed under the resume's name.
+h1 = re.search(r"<h1>(.*?)</h1>", body, re.DOTALL)
+title = html_mod.escape(re.sub(r"<[^>]+>", "", h1.group(1)).strip()) if h1 else "강미혜 경력기술서"
+
 html = (
     '<!DOCTYPE html><html lang="ko"><head><meta charset="utf-8">'
-    "<title>강미혜 경력기술서</title><style>" + CSS
+    "<title>" + title + "</title><style>" + CSS
     + (MERMAID_CSS if has_mermaid else "")
     + "</style></head><body>"
     + body

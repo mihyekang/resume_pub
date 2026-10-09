@@ -83,8 +83,10 @@ def keep_with_heading(body):
     intervenes, the diagram belongs to that one instead and the pair is left
     alone."""
     heads = [m for m in re.finditer(r"<h[23]\b[^>]*>.*?</h[23]>", body, re.DOTALL)]
+    # By now each diagram is an inline <svg> whose labels contain <div>s of
+    # their own, so match through </svg> rather than to the first </div>.
     figs = [m for m in re.finditer(
-        r'<div class="mermaid">.*?</div>|<p><img\b[^>]*/?></p>', body, re.DOTALL)]
+        r'<div class="mermaid"><svg\b.*?</svg></div>|<p><img\b[^>]*/?></p>', body, re.DOTALL)]
 
     spans = []
     for fig in figs:
