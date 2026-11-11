@@ -16,6 +16,11 @@ with open(src, encoding="utf-8") as f:
 # character and would print the backslash, so unescape before converting.
 text = text.replace("\\~", "~")
 
+# GitHub lets a list start right under a line of text ("**성과**" then "- ..."),
+# but Python-Markdown needs a blank line first or it folds the items into the
+# paragraph above. Add that blank line.
+text = re.sub(r"(?m)^(?![ \t]*(?:[-*+] |\d+\. |$)).*\S.*\n(?=- )", lambda m: m.group(0) + "\n", text)
+
 body = markdown.markdown(text, extensions=["tables", "sane_lists", "fenced_code"])
 
 # Python-Markdown renders ```mermaid as an escaped <pre><code> block. Mermaid
@@ -105,7 +110,7 @@ th {
 }
 td { padding: 5pt 7pt; border: 0.6pt solid #cfcfcf; vertical-align: top; }
 /* Break Korean between words, not inside them, in narrow columns. */
-th, td { word-break: keep-all; }
+th, td, p, li { word-break: keep-all; }
 h2, h3, h4 { break-inside: avoid; page-break-inside: avoid; }
 li, tr { break-inside: avoid; page-break-inside: avoid; }
 """
